@@ -1,0 +1,182 @@
+<title>Advanced Turf Care — Issue Playbook</title>
+<style>
+  :root {
+    --ink: #2A2E26;
+    --paper: #FBF9F4;
+    --paper-raised: #FFFFFF;
+    --forest: #2F5233;
+    --forest-soft: #E8EDE3;
+    --clay: #A8672E;
+    --clay-soft: #F3E7D8;
+    --line: #D8D2C4;
+    --muted: #6B6A5E;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ink: #EDEAE0;
+      --paper: #1B1E18;
+      --paper-raised: #22261F;
+      --forest: #86C08F;
+      --forest-soft: #263021;
+      --clay: #E0954F;
+      --clay-soft: #332619;
+      --line: #3A3F33;
+      --muted: #A6A392;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ink: #EDEAE0; --paper: #1B1E18; --paper-raised: #22261F;
+    --forest: #86C08F; --forest-soft: #263021; --clay: #E0954F;
+    --clay-soft: #332619; --line: #3A3F33; --muted: #A6A392;
+  }
+  :root[data-theme="light"] {
+    --ink: #2A2E26; --paper: #FBF9F4; --paper-raised: #FFFFFF;
+    --forest: #2F5233; --forest-soft: #E8EDE3; --clay: #A8672E;
+    --clay-soft: #F3E7D8; --line: #D8D2C4; --muted: #6B6A5E;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.55;
+  }
+  .wrap { max-width: 780px; margin: 0 auto; padding: 0 20px 70px; }
+
+  .brandbar {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 12px; padding: 28px 0 20px; border-bottom: 2px solid var(--forest);
+  }
+  .brand-name {
+    font-family: Iowan Old Style, "Palatino Linotype", Georgia, serif;
+    font-weight: 600; font-size: 1.3rem; color: var(--forest);
+  }
+  .brand-tag { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+
+  .intro { padding: 26px 0 6px; max-width: 62ch; }
+  .eyebrow { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin: 0 0 6px; }
+  h1 {
+    font-family: Iowan Old Style, "Palatino Linotype", Georgia, serif;
+    font-weight: 600; font-size: 1.65rem; margin: 0 0 10px; text-wrap: balance;
+  }
+  .intro p { color: var(--muted); font-size: 0.95rem; margin: 0 0 8px; }
+
+  .index {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    padding: 18px 0 8px; margin-bottom: 6px;
+  }
+  .index a {
+    font-size: 0.82rem; color: var(--forest); text-decoration: none;
+    background: var(--forest-soft); padding: 5px 12px; border-radius: 999px;
+    border: 1px solid transparent;
+  }
+
+  .card {
+    margin-top: 26px; padding-top: 26px; border-top: 1px solid var(--line);
+    scroll-margin-top: 16px;
+  }
+  .card-head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 14px; }
+  .card-num {
+    font-family: Iowan Old Style, "Palatino Linotype", Georgia, serif;
+    color: var(--clay); font-size: 0.95rem; font-weight: 600;
+  }
+  h2 {
+    font-family: Iowan Old Style, "Palatino Linotype", Georgia, serif;
+    font-size: 1.25rem; font-weight: 600; margin: 0; color: var(--ink);
+  }
+
+  .field { margin-bottom: 14px; }
+  .field:last-child { margin-bottom: 0; }
+  .field-label {
+    display: block; font-size: 0.7rem; text-transform: uppercase;
+    letter-spacing: 0.1em; font-weight: 600; margin-bottom: 5px; color: var(--muted);
+  }
+  .field p { margin: 0; max-width: 68ch; font-size: 0.95rem; }
+  .field.means .field-label { color: var(--forest); }
+  .field.action .field-label { color: var(--clay); }
+
+  .footer-note {
+    margin-top: 40px; padding: 18px 20px; background: var(--forest-soft);
+    border-radius: 8px; font-size: 0.88rem; color: var(--muted);
+  }
+
+  @media (max-width: 480px) { h1 { font-size: 1.4rem; } }
+</style>
+
+<div class="wrap">
+  <div class="brandbar">
+    <div class="brand-name">Advanced Turf Care</div>
+    <div class="brand-tag">Issue Playbook — Internal</div>
+  </div>
+
+  <div class="intro">
+    <p class="eyebrow">Reference document</p>
+    <h1>What we say for each common issue</h1>
+    <p>When a technician picks one of these issues in Service Autopilot, this is the writeup that gets pulled into the customer's report. Read through each one and mark anything you'd word differently — once approved, this becomes the fixed language the automation uses every time.</p>
+  </div>
+
+  <nav class="index">
+    <a href="#over">Overwatering</a>
+    <a href="#under">Underwatering</a>
+    <a href="#shade">Shade</a>
+    <a href="#scale">Crepe Myrtle Bark Scale</a>
+    <a href="#whitefly">Whitefly</a>
+    <a href="#pythium">Pythium Blight</a>
+    <a href="#scalp">Mowed Too Short</a>
+  </nav>
+
+  <div class="card" id="over">
+    <div class="card-head"><span class="card-num">01</span><h2>Too Much Irrigation</h2></div>
+    <div class="field"><span class="field-label">What it looks like</span><p>Spongy, soggy turf, standing water after watering, mushrooms popping up, and grass that stays wet long after it should have dried out.</p></div>
+    <div class="field means"><span class="field-label">What this means</span><p>When grass gets more water than it needs, the roots sit in soggy soil and can't get enough oxygen, so they weaken and grow shallow instead of deep. It also keeps the lawn wet for long stretches — exactly the kind of damp, humid conditions fungus needs to take hold.</p></div>
+    <div class="field action"><span class="field-label">What we'll do</span><p>We'll recommend a shorter, less frequent watering schedule and check for irrigation heads that may be stuck on or misaligned. If the soil's compacted and draining poorly, we may recommend aeration to help water move through instead of pooling.</p></div>
+  </div>
+
+  <div class="card" id="under">
+    <div class="card-head"><span class="card-num">02</span><h2>Not Enough Irrigation</h2></div>
+    <div class="field"><span class="field-label">What it looks like</span><p>Grass takes on a dull, grayish-blue tint before browning, footprints or mower tracks stay visible for a long time, and blades feel dry and brittle.</p></div>
+    <div class="field means"><span class="field-label">What this means</span><p>Without enough water, grass can't keep its cells full and firm, so it starts shutting down to conserve moisture — that's the color change you're seeing. If it continues, the grass will brown and go dormant to survive.</p></div>
+    <div class="field action"><span class="field-label">What we'll do</span><p>We'll recommend a deep, infrequent watering schedule (better than frequent light watering) and may suggest aeration so water soaks in instead of running off, especially on slopes and compacted areas.</p></div>
+  </div>
+
+  <div class="card" id="shade">
+    <div class="card-head"><span class="card-num">03</span><h2>Shade</h2></div>
+    <div class="field"><span class="field-label">What it looks like</span><p>Thin, sparse grass under trees or near structures, slower growth than the rest of the yard, and sometimes moss moving in.</p></div>
+    <div class="field means"><span class="field-label">What this means</span><p>Grass needs a good amount of direct sunlight to fuel its own growth. In heavy shade it thins out naturally, and thinner grass is also more vulnerable to wear and disease — even with everything else done right.</p></div>
+    <div class="field action"><span class="field-label">What we'll do</span><p>We'll recommend selective trimming of overhanging branches to open up more light, use a shade-tolerant seed blend when we overseed this area, and may suggest raising the mowing height here specifically. Some thinning is normal in heavy shade even with treatment.</p></div>
+  </div>
+
+  <div class="card" id="scale">
+    <div class="card-head"><span class="card-num">04</span><h2>Crepe Myrtle Bark Scale</h2></div>
+    <div class="field"><span class="field-label">What it looks like</span><p>A white or gray crusty coating on the branches and trunk, often with a black, sooty-looking residue on the bark and leaves below it.</p></div>
+    <div class="field means"><span class="field-label">What this means</span><p>This is a small scale insect that attaches to the bark and feeds on the tree. As it feeds, it excretes a sugary residue that grows black sooty mold — that's the dark coating you're seeing. It's unsightly and stresses the tree, though it's rarely fatal on its own.</p></div>
+    <div class="field action"><span class="field-label">What we'll do</span><p>We'll apply a treatment targeted at the scale insects and, for heavy buildup, may recommend a soft scrub of the trunk to remove the crust. We'll keep an eye on the tree's recovery on future visits.</p></div>
+  </div>
+
+  <div class="card" id="whitefly">
+    <div class="card-head"><span class="card-num">05</span><h2>Whitefly</h2></div>
+    <div class="field"><span class="field-label">What it looks like</span><p>Tiny white insects that flutter up when a shrub is disturbed, yellowing or speckled leaves, and a sticky residue with dark mold on the foliage.</p></div>
+    <div class="field means"><span class="field-label">What this means</span><p>Whiteflies feed on the underside of leaves and drain the plant's sap, which weakens it over time. Like the scale insect, they leave behind a sugary residue that grows the same sooty black mold.</p></div>
+    <div class="field action"><span class="field-label">What we'll do</span><p>We'll apply a treatment labeled for whitefly control on the affected shrubs. Whitefly populations can bounce back, so we'll plan a follow-up treatment and monitor on our next visit.</p></div>
+  </div>
+
+  <div class="card" id="pythium">
+    <div class="card-head"><span class="card-num">06</span><h2>Pythium Blight</h2></div>
+    <div class="field"><span class="field-label">What it looks like</span><p>Irregular brown, greasy-looking patches that can appear almost overnight, often starting in low spots or slopes where water collects.</p></div>
+    <div class="field means"><span class="field-label">What this means</span><p>Pythium is a fungus that thrives when grass blades stay wet for long stretches, especially in hot, humid weather. It spreads fast along the path water travels, which is why it often shows up first on slopes and low areas.</p></div>
+    <div class="field action"><span class="field-label">What we'll do</span><p>We'll apply a fungicide labeled for Pythium control, recommend watering only in the early morning so blades dry out during the day, and suggest avoiding mowing the area while it's wet to keep it from spreading. We'll overseed once it's under control.</p></div>
+  </div>
+
+  <div class="card" id="scalp">
+    <div class="card-head"><span class="card-num">07</span><h2>Mowed Too Short (Scalping)</h2></div>
+    <div class="field"><span class="field-label">What it looks like</span><p>Brown or yellow stressed grass right after a mow, stems and crowns visibly exposed, and sometimes weeds moving into the thinned area.</p></div>
+    <div class="field means"><span class="field-label">What this means</span><p>Cutting grass too short removes more of the leaf blade than the plant can afford, which cuts into its ability to photosynthesize and shocks the root system. It also opens up bare soil where weeds are quick to move in.</p></div>
+    <div class="field action"><span class="field-label">What we'll do</span><p>We'll recommend raising the mowing height to what's right for this grass type going forward, and overseed any bare patches that developed. The lawn should bounce back on its own once it's cut at the correct height.</p></div>
+  </div>
+
+  <div class="footer-note">
+    Once you've reviewed these, this text becomes the fixed content the automation pulls from — so it's worth getting the wording exactly right now. We can always add more issues to this list later.
+  </div>
+</div>

@@ -1,0 +1,288 @@
+<title>Lawn Health Report — Sample</title>
+<style>
+  :root {
+    --ink: #2A2E26;
+    --paper: #FBF9F4;
+    --paper-raised: #FFFFFF;
+    --forest: #2F5233;
+    --forest-soft: #E8EDE3;
+    --clay: #A8672E;
+    --clay-soft: #F3E7D8;
+    --line: #D8D2C4;
+    --muted: #6B6A5E;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ink: #EDEAE0;
+      --paper: #1B1E18;
+      --paper-raised: #22261F;
+      --forest: #86C08F;
+      --forest-soft: #263021;
+      --clay: #E0954F;
+      --clay-soft: #332619;
+      --line: #3A3F33;
+      --muted: #A6A392;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ink: #EDEAE0;
+    --paper: #1B1E18;
+    --paper-raised: #22261F;
+    --forest: #86C08F;
+    --forest-soft: #263021;
+    --clay: #E0954F;
+    --clay-soft: #332619;
+    --line: #3A3F33;
+    --muted: #A6A392;
+  }
+  :root[data-theme="light"] {
+    --ink: #2A2E26;
+    --paper: #FBF9F4;
+    --paper-raised: #FFFFFF;
+    --forest: #2F5233;
+    --forest-soft: #E8EDE3;
+    --clay: #A8672E;
+    --clay-soft: #F3E7D8;
+    --line: #D8D2C4;
+    --muted: #6B6A5E;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.55;
+  }
+  .sheet {
+    max-width: 660px;
+    margin: 0 auto;
+    padding: 0 20px 64px;
+  }
+
+  /* Header */
+  .brandbar {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 28px 0 20px;
+    border-bottom: 2px solid var(--forest);
+  }
+  .brand-name {
+    font-family: Iowan Old Style, "Palatino Linotype", Georgia, serif;
+    font-weight: 600;
+    font-size: 1.3rem;
+    color: var(--forest);
+    letter-spacing: 0.01em;
+  }
+  .brand-tag {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  /* Report title block */
+  .titleblock { padding: 28px 0 8px; }
+  .eyebrow {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    margin: 0 0 6px;
+  }
+  h1 {
+    font-family: Iowan Old Style, "Palatino Linotype", Georgia, serif;
+    font-weight: 600;
+    font-size: 1.75rem;
+    line-height: 1.25;
+    margin: 0 0 14px;
+    text-wrap: balance;
+    color: var(--ink);
+  }
+  .meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 22px;
+    font-size: 0.88rem;
+    color: var(--muted);
+    padding-bottom: 20px;
+  }
+  .meta-row strong { color: var(--ink); font-weight: 600; }
+
+  /* Photo */
+  figure {
+    margin: 8px 0 30px;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+  }
+  figure img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .photo-placeholder {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    background: linear-gradient(160deg, var(--forest-soft), var(--paper-raised));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--muted);
+    font-size: 0.85rem;
+    text-align: center;
+    padding: 20px;
+  }
+  figcaption {
+    padding: 10px 14px;
+    font-size: 0.82rem;
+    color: var(--muted);
+    background: var(--paper-raised);
+    border-top: 1px solid var(--line);
+  }
+
+  /* Sections */
+  section.block {
+    padding: 24px 0;
+    border-top: 1px solid var(--line);
+  }
+  .block-label {
+    display: inline-block;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+    padding: 3px 9px;
+    border-radius: 3px;
+    margin-bottom: 12px;
+  }
+  .block-label.found { background: var(--clay-soft); color: var(--clay); }
+  .block-label.means { background: var(--forest-soft); color: var(--forest); }
+  .block-label.action { background: var(--forest); color: var(--paper-raised); }
+
+  h2 {
+    font-family: Iowan Old Style, "Palatino Linotype", Georgia, serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 0 0 10px;
+    color: var(--ink);
+  }
+  p { margin: 0 0 12px; max-width: 62ch; }
+  p:last-child { margin-bottom: 0; }
+
+  ul.actions {
+    list-style: none;
+    margin: 14px 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  ul.actions li {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    font-size: 0.95rem;
+  }
+  ul.actions li::before {
+    content: "";
+    flex: none;
+    width: 8px;
+    height: 8px;
+    margin-top: 7px;
+    border-radius: 50%;
+    background: var(--forest);
+  }
+
+  /* Footer / CTA */
+  .footer {
+    margin-top: 12px;
+    padding: 22px;
+    background: var(--forest-soft);
+    border-radius: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+  }
+  .footer-text { font-size: 0.9rem; }
+  .footer-text strong { display: block; color: var(--forest); font-size: 0.95rem; margin-bottom: 2px; }
+  .contact {
+    font-size: 0.88rem;
+    color: var(--muted);
+    text-align: right;
+  }
+  .contact a { color: var(--forest); text-decoration: none; font-weight: 600; }
+
+  @media (max-width: 480px) {
+    h1 { font-size: 1.45rem; }
+    .contact { text-align: left; }
+    .footer { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+
+<div class="sheet">
+  <div class="brandbar">
+    <div class="brand-name">Advanced Turf Care</div>
+    <div class="brand-tag">Lawn Health Report</div>
+  </div>
+
+  <div class="titleblock">
+    <p class="eyebrow">Prepared for</p>
+    <h1>[Customer Name] — [Street Address]</h1>
+    <div class="meta-row">
+      <span>Visit date: <strong>July 10, 2026</strong></span>
+      <span>Area inspected: <strong>Back yard, upper slope</strong></span>
+      <span>Grass type: <strong>Bermudagrass</strong></span>
+      <span>Technician: <strong>[Tech Name]</strong></span>
+    </div>
+  </div>
+
+  <figure>
+    <div class="photo-placeholder">Your yard photo goes here<br>(the actual photo you send in will appear like this)</div>
+    <figcaption>Back slope, near the fence line — photo taken during today's visit</figcaption>
+  </figure>
+
+  <section class="block">
+    <span class="block-label found">What we found</span>
+    <h2>Irregular brown, thinning patches on the slope</h2>
+    <p>There are a couple of connected tan-brown patches on the upper part of your back slope, right along the fence. The grass in the middle of these spots is thin and dry, while the lawn around it is still green and healthy — so this is a localized problem, not something affecting the whole yard.</p>
+    <p>Our leading suspicion is <strong>Pythium Blight</strong>, a fungal disease that hits Bermudagrass hard in exactly this kind of weather. This year's pattern of hard heat and drought, followed by sudden afternoon storms and heavy overnight humidity, is close to a textbook setup for it to take hold.</p>
+  </section>
+
+  <section class="block">
+    <span class="block-label means">What this means for you</span>
+    <h2>Weather stress opened the door for disease</h2>
+    <p>The drought and heat this summer already weakened the grass in this spot. Then the recent evening showers and humidity kept the grass blades wet all night long — and that prolonged leaf wetness is exactly what Pythium needs to infect and spread. Slopes and low-lying areas like yours tend to hold moisture and show it first, and Pythium is notorious for spreading fast along water flow.</p>
+    <p>This isn't a sign of poor lawn care — it's a weather-driven disease outbreak, and it's treatable. Left unchecked, though, Pythium can spread quickly overnight, especially if humid, wet conditions continue.</p>
+  </section>
+
+  <section class="block">
+    <span class="block-label action">What we'll do about it</span>
+    <h2>Our plan for this spot</h2>
+    <ul class="actions">
+      <li>Confirm Pythium Blight with an on-site inspection (greasy, matted blades and a distinct smell are tell-tale signs).</li>
+      <li>Apply a fungicide labeled for Pythium control on Bermudagrass.</li>
+      <li>Recommend watering only in the early morning, never in the evening, so blades dry out during the day instead of staying wet overnight.</li>
+      <li>Advise holding off on mowing this area while it's wet to avoid spreading spores to healthy turf.</li>
+      <li>Overseed the damaged patches once the fungus is controlled so they fill back in.</li>
+      <li>Re-check this spot on our next visit and note progress in your file.</li>
+    </ul>
+  </section>
+
+  <div class="footer">
+    <div class="footer-text">
+      <strong>Questions about this report?</strong>
+      Just reply to this email or give us a call — we're happy to walk through it with you.
+    </div>
+    <div class="contact">
+      <a href="#">Advanced Turf Care</a><br>
+      (555) 123-4567
+    </div>
+  </div>
+</div>
