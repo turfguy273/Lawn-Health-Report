@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Your Lawn Health Report — Advanced Turf Care</title>
+<style>
+  :root {
+    --ink: #2A2E26;
+    --paper: #FBF9F4;
+    --paper-raised: #FFFFFF;
+    --forest: #2F5233;
+    --forest-soft: #E8EDE3;
+    --clay: #A8672E;
+    --clay-soft: #F3E7D8;
+    --line: #D8D2C4;
+    --muted: #6B6A5E;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ink: #EDEAE0; --paper: #1B1E18; --paper-raised: #22261F;
+      --forest: #86C08F; --forest-soft: #263021; --clay: #E0954F;
+      --clay-soft: #332619; --line: #3A3F33; --muted: #A6A392;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--paper); color: var(--ink);
+    font-family: -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.55;
+  }
+  .sheet { max-width: 660px; margin: 0 auto; padding: 0 20px 64px; }
+  .brandbar {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 12px; padding: 28px 0 20px; border-bottom: 2px solid var(--forest);
+  }
+  .brand-name {
+    font-family: Iowan Old Style, "Palatino Linotype", Georgia, serif;
+    font-weight: 600; font-size: 1.3rem; color: var(--forest);
+  }
+  .brand-tag { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); white-space: nowrap; }
+  .titleblock { padding: 28px 0 8px; }
+  .eyebrow { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin: 0 0 6px; }
+  h1 {
+    font-family: Iowan Old Style, "Palatino Linotype", Georgia, serif;
+    font-weight: 600; font-size: 1.75rem; line-height: 1.25; margin: 0 0 14px;
+    text-wrap: balance; color: var(--ink);
+  }
+  .meta-row { display: flex; flex-wrap: wrap; gap: 4px 22px; font-size: 0.88rem; color: var(--muted); padding-bottom: 20px; }
+  .meta-row strong { color: var(--ink); font-weight: 600; }
+  figure { margin: 8px 0 30px; border-radius: 6px; overflow: hidden; border: 1px solid var(--line); }
+  figure img { display: block; width: 100%; height: auto; }
+  .photo-placeholder {
+    width: 100%; aspect-ratio: 4 / 3;
+    background: linear-gradient(160deg, var(--forest-soft), var(--paper-raised));
+    display: flex; align-items: center; justify-content: center;
+    color: var(--muted); font-size: 0.85rem; text-align: center; padding: 20px;
+  }
+  figcaption { padding: 10px 14px; font-size: 0.82rem; color: var(--muted); background: var(--paper-raised); border-top: 1px solid var(--line); }
+  section.block { padding: 24px 0; border-top: 1px solid var(--line); }
+  .block-label {
+    display: inline-block; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em;
+    font-weight: 600; padding: 3px 9px; border-radius: 3px; margin-bottom: 12px;
+  }
+  .block-label.found { background: var(--clay-soft); color: var(--clay); }
+  .block-label.means { background: var(--forest-soft); color: var(--forest); }
+  .block-label.action { background: var(--forest); color: var(--paper-raised); }
+  h2 { font-family: Iowan Old Style, "Palatino Linotype", Georgia, serif; font-size: 1.2rem; font-weight: 600; margin: 0 0 10px; color: var(--ink); }
+  p { margin: 0 0 12px; max-width: 62ch; }
+  p:last-child { margin-bottom: 0; }
+  .footer {
+    margin-top: 12px; padding: 22px; background: var(--forest-soft); border-radius: 8px;
+    display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 14px;
+  }
+  .footer-text { font-size: 0.9rem; }
+  .footer-text strong { display: block; color: var(--forest); font-size: 0.95rem; margin-bottom: 2px; }
+  .contact { font-size: 0.88rem; color: var(--muted); text-align: right; }
+  .contact a { color: var(--forest); text-decoration: none; font-weight: 600; }
+  @media (max-width: 480px) {
+    h1 { font-size: 1.45rem; }
+    .contact { text-align: left; }
+    .footer { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+  <div class="sheet">
+    <div class="brandbar">
+      <div class="brand-name">Advanced Turf Care</div>
+      <div class="brand-tag">Lawn Health Report</div>
+    </div>
+
+    <div class="titleblock">
+      <p class="eyebrow">Prepared for</p>
+      <h1 id="titleLine">Your Property</h1>
+      <div class="meta-row">
+        <span>Visit date: <strong id="visitDate">—</strong></span>
+        <span>Area inspected: <strong id="areaInspected">—</strong></span>
+        <span>Technician: <strong id="techName">—</strong></span>
+      </div>
+    </div>
+
+    <figure>
+      <div class="photo-placeholder" id="photoPlaceholder">Photo not available for this report</div>
+      <img id="photoImg" style="display:none" alt="Photo from today's visit" />
+      <figcaption id="photoCaption">Photo taken during today's visit</figcaption>
+    </figure>
+
+    <section class="block">
+      <span class="block-label found">What we found</span>
+      <h2 id="issueTitle">—</h2>
+      <p id="foundBody">—</p>
+    </section>
+
+    <section class="block">
+      <span class="block-label means">What this means for you</span>
+      <h2>What's going on</h2>
+      <p id="meansBody">—</p>
+    </section>
+
+    <section class="block">
+      <span class="block-label action">What we'll do about it</span>
+      <h2>Our plan for this spot</h2>
+      <p id="actionBody">—</p>
+    </section>
+
+    <div class="footer">
+      <div class="footer-text">
+        <strong>Questions about this report?</strong>
+        Just reply to our text or give us a call — we're happy to walk through it with you.
+      </div>
+      <div class="contact">
+        <a href="#">Advanced Turf Care</a><br>
+        (555) 123-4567
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Edit this text anytime — it's the only place the wording for each issue lives.
+    const PLAYBOOK = {
+      overwatering: {
+        title: "Too Much Irrigation",
+        found: "Spongy, soggy turf, standing water after watering, mushrooms popping up, and grass that stays wet long after it should have dried out.",
+        means: "When grass gets more water than it needs, the roots sit in soggy soil and can't get enough oxygen, so they weaken and grow shallow instead of deep. It also keeps the lawn wet for long stretches — exactly the kind of damp, humid conditions fungus needs to take hold.",
+        action: "We'll recommend a shorter, less frequent watering schedule and check for irrigation heads that may be stuck on or misaligned. If the soil's compacted and draining poorly, we may recommend aeration to help water move through instead of pooling."
+      },
+      underwatering: {
+        title: "Not Enough Irrigation",
+        found: "Grass takes on a dull, grayish-blue tint before browning, footprints or mower tracks stay visible for a long time, and blades feel dry and brittle.",
+        means: "Without enough water, grass can't keep its cells full and firm, so it starts shutting down to conserve moisture — that's the color change you're seeing. If it continues, the grass will brown and go dormant to survive.",
+        action: "We'll recommend a deep, infrequent watering schedule (better than frequent light watering) and may suggest aeration so water soaks in instead of running off, especially on slopes and compacted areas."
+      },
+      shade: {
+        title: "Shade",
+        found: "Thin, sparse grass under trees or near structures, slower growth than the rest of the yard, and sometimes moss moving in.",
+        means: "Grass needs a good amount of direct sunlight to fuel its own growth. In heavy shade it thins out naturally, and thinner grass is also more vulnerable to wear and disease — even with everything else done right.",
+        action: "We'll recommend selective trimming of overhanging branches to open up more light, use a shade-tolerant seed blend when we overseed this area, and may suggest raising the mowing height here specifically. Some thinning is normal in heavy shade even with treatment."
+      },
+      scale: {
+        title: "Crepe Myrtle Bark Scale",
+        found: "A white or gray crusty coating on the branches and trunk, often with a black, sooty-looking residue on the bark and leaves below it.",
+        means: "This is a small scale insect that attaches to the bark and feeds on the tree. As it feeds, it excretes a sugary residue that grows black sooty mold — that's the dark coating you're seeing. It's unsightly and stresses the tree, though it's rarely fatal on its own.",
+        action: "We'll apply a treatment targeted at the scale insects and, for heavy buildup, may recommend a soft scrub of the trunk to remove the crust. We'll keep an eye on the tree's recovery on future visits."
+      },
+      whitefly: {
+        title: "Whitefly",
+        found: "Tiny white insects that flutter up when a shrub is disturbed, yellowing or speckled leaves, and a sticky residue with dark mold on the foliage.",
+        means: "Whiteflies feed on the underside of leaves and drain the plant's sap, which weakens it over time. Like the scale insect, they leave behind a sugary residue that grows the same sooty black mold.",
+        action: "We'll apply a treatment labeled for whitefly control on the affected shrubs. Whitefly populations can bounce back, so we'll plan a follow-up treatment and monitor on our next visit."
+      },
+      pythium: {
+        title: "Pythium Blight",
+        found: "Irregular brown, greasy-looking patches that can appear almost overnight, often starting in low spots or slopes where water collects.",
+        means: "Pythium is a fungus that thrives when grass blades stay wet for long stretches, especially in hot, humid weather. It spreads fast along the path water travels, which is why it often shows up first on slopes and low areas.",
+        action: "We'll apply a fungicide labeled for Pythium control, recommend watering only in the early morning so blades dry out during the day, and suggest avoiding mowing the area while it's wet to keep it from spreading. We'll overseed once it's under control."
+      },
+      scalp: {
+        title: "Mowed Too Short (Scalping)",
+        found: "Brown or yellow stressed grass right after a mow, stems and crowns visibly exposed, and sometimes weeds moving into the thinned area.",
+        means: "Cutting grass too short removes more of the leaf blade than the plant can afford, which cuts into its ability to photosynthesize and shocks the root system. It also opens up bare soil where weeds are quick to move in.",
+        action: "We'll recommend raising the mowing height to what's right for this grass type going forward, and overseed any bare patches that developed. The lawn should bounce back on its own once it's cut at the correct height."
+      }
+    };
+
+    function fill(id, value, fallback) {
+      const el = document.getElementById(id);
+      el.textContent = value && value.trim() ? value : (fallback || "—");
+    }
+
+    const params = new URLSearchParams(window.location.search);
+    const name = params.get("name");
+    const address = params.get("address");
+    const date = params.get("date");
+    const area = params.get("area");
+    const tech = params.get("tech");
+    const photo = params.get("photo");
+    const issueKey = (params.get("issue") || "").toLowerCase().trim();
+    const issue = PLAYBOOK[issueKey];
+
+    document.title = (name ? name + "'s " : "Your ") + "Lawn Health Report — Advanced Turf Care";
+
+    document.getElementById("titleLine").textContent =
+      [name, address].filter(Boolean).join(" — ") || "Your Property";
+    fill("visitDate", date);
+    fill("areaInspected", area);
+    fill("techName", tech);
+
+    if (photo) {
+      const img = document.getElementById("photoImg");
+      img.src = photo;
+      img.style.display = "block";
+      document.getElementById("photoPlaceholder").style.display = "none";
+    }
+
+    if (issue) {
+      document.getElementById("issueTitle").textContent = issue.title;
+      document.getElementById("foundBody").textContent = issue.found;
+      document.getElementById("meansBody").textContent = issue.means;
+      document.getElementById("actionBody").textContent = issue.action;
+    } else {
+      document.getElementById("issueTitle").textContent = "Report unavailable";
+      document.getElementById("foundBody").textContent =
+        "We couldn't match this report to one of our issue types. Please contact us and we'll sort it out.";
+      document.getElementById("meansBody").textContent = "—";
+      document.getElementById("actionBody").textContent = "—";
+    }
+  </script>
+</body>
+</html>
