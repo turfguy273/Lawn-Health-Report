@@ -37,39 +37,39 @@
   .wrap { max-width: 760px; margin: 0 auto; padding: 0 20px 70px; }
 
   .brandbar {
-    display: flex; align-items: baseline; justify-content: space-between;
-    gap: 12px; padding: 26px 0 18px; border-bottom: 2px solid var(--forest);
+    display: flex; flex-direction: column; align-items: center; text-align: center;
+    gap: 8px; padding: 26px 0 18px; border-bottom: 2px solid var(--forest);
   }
   .brand-name { font-family: Iowan Old Style, "Palatino Linotype", Georgia, serif; font-weight: 600; font-size: 1.2rem; color: var(--forest); }
   .brand-logo { height: 44px; width: auto; display: block; }
   .brand-tag { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
 
-  .hero { padding: 34px 0 28px; border-bottom: 1px solid var(--line); }
+  .hero { padding: 34px 0 28px; border-bottom: 1px solid var(--line); text-align: center; }
   .eyebrow { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--clay); margin: 0 0 10px; font-weight: 600; }
   h1 {
     font-family: Iowan Old Style, "Palatino Linotype", Georgia, serif;
     font-size: 2.4rem; font-weight: 600; margin: 0 0 6px; text-wrap: balance; color: var(--ink);
   }
   .latin { font-family: Iowan Old Style, "Palatino Linotype", Georgia, serif; font-style: italic; color: var(--muted); font-size: 1.05rem; margin: 0 0 16px; }
-  .hook { max-width: 58ch; font-size: 1.05rem; color: var(--ink); margin: 0; }
+  .hook { max-width: 58ch; font-size: 1.05rem; color: var(--ink); margin: 0 auto; }
 
   .idrow {
     display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
     background: var(--line); border: 1px solid var(--line); border-radius: 8px; overflow: hidden;
     margin: 26px 0 0;
   }
-  .idcell { background: var(--paper-raised); padding: 14px 12px; }
+  .idcell { background: var(--paper-raised); padding: 14px 12px; text-align: center; }
   .idcell .k { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 4px; }
   .idcell .v { font-size: 0.92rem; font-weight: 600; color: var(--forest); }
 
-  section.block { padding: 30px 0; border-top: 1px solid var(--line); }
+  section.block { padding: 30px 0; border-top: 1px solid var(--line); text-align: center; }
   .block-label {
     display: inline-block; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em;
     font-weight: 600; padding: 3px 10px; border-radius: 3px; margin-bottom: 14px;
     background: var(--forest-soft); color: var(--forest);
   }
   h2 { font-family: Iowan Old Style, "Palatino Linotype", Georgia, serif; font-size: 1.35rem; font-weight: 600; margin: 0 0 12px; }
-  p { margin: 0 0 12px; max-width: 66ch; }
+  p { margin: 0 auto 12px; max-width: 66ch; }
   p:last-child { margin-bottom: 0; }
 
   .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 6px; }
@@ -85,24 +85,23 @@
   .turf-body h3 { font-family: Iowan Old Style, "Palatino Linotype", Georgia, serif; font-size: 1.05rem; margin: 0 0 8px; }
   .turf-body p { font-size: 0.92rem; margin: 0; }
 
-  ul.plain { margin: 0; padding-left: 20px; }
+  ul.plain { margin: 0 auto; padding-left: 0; max-width: 62ch; list-style-position: inside; }
   ul.plain li { margin-bottom: 8px; font-size: 0.97rem; }
   ul.plain li:last-child { margin-bottom: 0; }
 
   .footer {
     margin-top: 6px; padding: 20px 22px; background: var(--forest-soft); border-radius: 8px;
-    display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 14px;
+    display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px;
   }
   .footer-text { font-size: 0.9rem; }
   .footer-text strong { display: block; color: var(--forest); margin-bottom: 2px; }
-  .contact { font-size: 0.88rem; color: var(--muted); text-align: right; }
+  .contact { font-size: 0.88rem; color: var(--muted); text-align: center; }
   .contact a { color: var(--forest); text-decoration: none; font-weight: 600; }
 
   @media (max-width: 560px) {
     h1 { font-size: 1.9rem; }
     .idrow { grid-template-columns: repeat(2, 1fr); }
     .compare { grid-template-columns: 1fr; }
-    .contact { text-align: left; }
   }
 </style>
 
