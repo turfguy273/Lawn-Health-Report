@@ -1,0 +1,138 @@
+<title>Lawn Health Report — Mowed Too Short</title>
+<style>
+  :root {
+    --ink: #2A2E26;
+    --paper: #FBF9F4;
+    --paper-raised: #FFFFFF;
+    --forest: #1D7A3C;
+    --forest-soft: #E7F1E8;
+    --clay: #A8672E;
+    --clay-soft: #F3E7D8;
+    --line: #D8D2C4;
+    --muted: #6B6A5E;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ink: #EDEAE0; --paper: #1B1E18; --paper-raised: #22261F;
+      --forest: #7FCB8A; --forest-soft: #1F2E22; --clay: #E0954F;
+      --clay-soft: #332619; --line: #3A3F33; --muted: #A6A392;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ink: #EDEAE0; --paper: #1B1E18; --paper-raised: #22261F;
+    --forest: #7FCB8A; --forest-soft: #1F2E22; --clay: #E0954F;
+    --clay-soft: #332619; --line: #3A3F33; --muted: #A6A392;
+  }
+  :root[data-theme="light"] {
+    --ink: #2A2E26; --paper: #FBF9F4; --paper-raised: #FFFFFF;
+    --forest: #1D7A3C; --forest-soft: #E7F1E8; --clay: #A8672E;
+    --clay-soft: #F3E7D8; --line: #D8D2C4; --muted: #6B6A5E;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--paper); color: var(--ink);
+    font-family: -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.55;
+  }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 0 20px 70px; }
+
+  .brandbar {
+    display: flex; flex-direction: column; align-items: center; text-align: center;
+    gap: 6px; padding: 30px 0 22px; border-bottom: 2px solid var(--forest);
+  }
+  .brand-logo { height: 132px; width: auto; display: block; }
+  .brand-tag { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); }
+
+  .hero { padding: 34px 0 28px; border-bottom: 1px solid var(--line); text-align: center; }
+  .eyebrow { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--clay); margin: 0 0 10px; font-weight: 600; }
+  h1 {
+    font-family: Iowan Old Style, "Palatino Linotype", Georgia, serif;
+    font-size: 2.2rem; font-weight: 600; margin: 0 0 16px; text-wrap: balance; color: var(--ink);
+  }
+  .greeting { max-width: 62ch; color: var(--ink); margin: 0 auto; text-align: left; }
+
+  .idrow {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
+    background: var(--line); border: 1px solid var(--line); border-radius: 8px; overflow: hidden;
+    margin: 22px 0 0;
+  }
+  .idcell { background: var(--paper-raised); padding: 14px 12px; text-align: center; }
+  .idcell .k { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 4px; }
+  .idcell .v { font-size: 0.92rem; font-weight: 600; color: var(--forest); }
+
+  section.block { padding: 30px 0; border-top: 1px solid var(--line); text-align: center; }
+  .block-label {
+    display: inline-block; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em;
+    font-weight: 600; padding: 3px 10px; border-radius: 3px; margin-bottom: 14px;
+  }
+  .block-label.found { background: var(--clay-soft); color: var(--clay); }
+  .block-label.means { background: var(--forest-soft); color: var(--forest); }
+  .block-label.action { background: var(--forest); color: var(--paper-raised); }
+  h2 { font-family: Iowan Old Style, "Palatino Linotype", Georgia, serif; font-size: 1.35rem; font-weight: 600; margin: 0 0 12px; }
+  .block p { margin: 0 auto 12px; max-width: 62ch; text-align: left; }
+  .block p:last-child { margin-bottom: 0; }
+
+  .footer {
+    margin-top: 6px; padding: 20px 22px; background: var(--forest-soft); border-radius: 8px;
+    display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px;
+  }
+  .footer-text { font-size: 0.9rem; }
+  .footer-text strong { display: block; color: var(--forest); margin-bottom: 2px; }
+  .contact { font-size: 0.88rem; color: var(--muted); text-align: center; }
+  .contact a { color: var(--forest); text-decoration: none; font-weight: 600; }
+
+  @media (max-width: 560px) {
+    h1 { font-size: 1.7rem; }
+    .brand-logo { height: 96px; }
+    .idrow { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+
+<div class="wrap">
+  <div class="brandbar">
+    <img src="https://turfguy273.github.io/Lawn-Health-Report/assets/logo.png" alt="Advanced Turf Care" class="brand-logo" />
+    <div class="brand-tag">Lawn Health Report</div>
+  </div>
+
+  <div class="hero">
+    <p class="eyebrow">Lawn Concern Found During Today's Visit</p>
+    <h1>We Noticed Your Lawn Was Mowed Too Short</h1>
+    <p class="greeting">Hi there, while treating your lawn today, our technician noticed signs of scalping &mdash; grass cut shorter than it should be. We wanted to let you know right away, along with what it means for your lawn and what we recommend.</p>
+  </div>
+
+  <section class="block">
+    <span class="block-label found">What We Found</span>
+    <h2>Mowed Too Short (Scalping)</h2>
+    <p>Brown or yellow stressed grass right after a mow, stems and crowns visibly exposed, and sometimes weeds moving into the thinned area &mdash; that's exactly what our technician found in your lawn today.</p>
+    <div class="idrow">
+      <div class="idcell"><div class="k">Cause</div><div class="v">Mower height too low</div></div>
+      <div class="idcell"><div class="k">Appearance</div><div class="v">Yellow-brown blades</div></div>
+      <div class="idcell"><div class="k">Pattern</div><div class="v">Follows mower lines</div></div>
+      <div class="idcell"><div class="k">Recovery</div><div class="v">1&ndash;2 weeks if corrected</div></div>
+    </div>
+  </section>
+
+  <section class="block">
+    <span class="block-label means">What This Means For You</span>
+    <h2>Why It's Worth Addressing Now</h2>
+    <p>Cutting grass too short removes more of the leaf blade than the plant can afford, which cuts into its ability to photosynthesize and shocks the root system. It also opens up bare soil where weeds are quick to move in.</p>
+  </section>
+
+  <section class="block">
+    <span class="block-label action">What We'll Do About It</span>
+    <h2>Our Plan</h2>
+    <p>This one comes down to mowing height, so there's nothing for us to treat &mdash; we'll just flag the correct height for your grass type going forward. If any bare or thinned patches developed, we can send you an estimate to overseed those areas. Otherwise, the lawn should bounce back on its own once it's cut at the right height.</p>
+  </section>
+
+  <div class="footer">
+    <div class="footer-text">
+      <strong>Questions about this?</strong>
+      Just reply to this email or text, or give us a call — we're happy to walk through it with you.
+    </div>
+    <div class="contact">
+      <a href="#">Advanced Turf Care</a><br>
+      (704) 800-5955
+    </div>
+  </div>
+</div>
+
