@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>COGS &amp; Gross Margin Calculator — Advanced Turf Care</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F5F3EE;
+    --card:#FFFFFF;
+    --ink:#242420;
+    --ink-soft:#6B6A63;
+    --green:#254E36;
+    --green-soft:#3D7350;
+    --soil:#7A5B3E;
+    --line:#E1DED4;
+    --input-bg:#FDF8E9;
+    --input-border:#D9B34D;
+    --result-bg:#E8F1E9;
+    --danger:#A23B2E;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:'IBM Plex Sans', sans-serif; font-size:14px;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{font-family:'Barlow Condensed', sans-serif; text-transform:uppercase; letter-spacing:0.02em; margin:0;}
+  .wrap{max-width:1080px; margin:0 auto; padding:28px 20px 60px;}
+  .masthead{display:flex; align-items:baseline; justify-content:space-between; flex-wrap:wrap; gap:8px; border-bottom:3px solid var(--green); padding-bottom:14px; margin-bottom:6px;}
+  .masthead h1{font-size:30px; font-weight:700; color:var(--green);}
+  .masthead .sub{color:var(--ink-soft); font-size:13px; max-width:520px;}
+  .tag{font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--soil); background:#F0E8DC; border:1px solid #E1D3BC; padding:3px 8px; border-radius:3px;}
+  .tabs{display:flex; gap:4px; margin:18px 0 18px; border-bottom:1px solid var(--line); flex-wrap:wrap;}
+  .tab{
+    font-family:'Barlow Condensed', sans-serif; font-weight:600; font-size:16px; letter-spacing:0.03em;
+    text-transform:uppercase; padding:10px 16px; cursor:pointer; color:var(--ink-soft);
+    border-bottom:3px solid transparent; user-select:none;
+  }
+  .tab.active{color:var(--green); border-bottom-color:var(--green);}
+  .tab:hover{color:var(--green-soft);}
+  .panel{display:none;}
+  .panel.active{display:block; animation:fade .15s ease;}
+  @keyframes fade{from{opacity:0} to{opacity:1}}
+  .card{background:var(--card); border:1px solid var(--line); border-radius:6px; margin-bottom:16px; overflow:hidden;}
+  .card h2{background:var(--green); color:#fff; font-size:17px; padding:9px 14px; font-weight:600;}
+  .card .body{padding:14px 16px;}
+  .card .note{font-size:12px; color:var(--ink-soft); font-style:italic; padding:0 16px 12px;}
+  table{width:100%; border-collapse:collapse; font-size:13px;}
+  th{
+    text-align:left; font-family:'IBM Plex Mono', monospace; font-size:10.5px; letter-spacing:0.03em;
+    text-transform:uppercase; color:var(--ink-soft); border-bottom:1px solid var(--line); padding:6px 8px; font-weight:500;
+  }
+  td{padding:5px 8px; border-bottom:1px solid #F0EFE9; vertical-align:middle;}
+  tr.subtotal td{font-weight:600; border-top:1px solid var(--line); border-bottom:none; background:#FAFAF6;}
+  tr.result td{font-weight:700; background:var(--result-bg); font-size:14px;}
+  input[type=number], input[type=text]{
+    width:100%; background:var(--input-bg); border:1px solid var(--input-border); border-radius:3px;
+    padding:5px 7px; font-family:'IBM Plex Mono', monospace; font-size:13px; color:var(--ink);
+  }
+  input:focus{outline:2px solid var(--green-soft); outline-offset:1px;}
+  .num{font-family:'IBM Plex Mono', monospace; text-align:right;}
+  .lbl-input{border:none; background:transparent; font-family:'IBM Plex Sans'; font-size:13px; padding:5px 4px; width:100%;}
+  .kpi-row{display:flex; gap:12px; flex-wrap:wrap; margin-bottom:16px;}
+  .kpi{flex:1; min-width:150px; background:var(--card); border:1px solid var(--line); border-radius:6px; padding:12px 14px;}
+  .kpi .k-label{font-family:'IBM Plex Mono', monospace; font-size:10.5px; text-transform:uppercase; color:var(--ink-soft); letter-spacing:.03em;}
+  .kpi .k-value{font-size:26px; font-weight:700; font-family:'Barlow Condensed'; color:var(--green); margin-top:2px;}
+  .kpi.warn .k-value{color:var(--danger);}
+  .stackbar{display:flex; height:34px; border-radius:4px; overflow:hidden; border:1px solid var(--line); margin-top:6px;}
+  .stackbar div{display:flex; align-items:center; justify-content:center; color:#fff; font-size:10.5px; font-family:'IBM Plex Mono'; white-space:nowrap; overflow:hidden;}
+  .legend{display:flex; gap:14px; flex-wrap:wrap; font-size:11px; color:var(--ink-soft); margin-top:8px;}
+  .legend span{display:inline-flex; align-items:center; gap:5px;}
+  .swatch{width:10px; height:10px; border-radius:2px; display:inline-block;}
+  .summary-table td, .summary-table th{text-align:center;}
+  .summary-table td:first-child, .summary-table th:first-child{text-align:left;}
+  .summary-table tr td:first-child{font-weight:600;}
+  footer{margin-top:24px; font-size:11px; color:var(--ink-soft); border-top:1px solid var(--line); padding-top:12px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="masthead">
+    <div>
+      <h1>COGS &amp; Gross Margin Calculator</h1>
+      <div class="sub">Build a per-hour cost of goods sold for mowing and fertilizer/weed control, then compare it against what you bill.</div>
+    </div>
+    <div class="tag">2026 payroll tax figures</div>
+  </div>
+  <div class="tabs">
+    <div class="tab active" data-tab="payroll">Payroll Tax</div>
+    <div class="tab" data-tab="mowing">Mowing</div>
+    <div class="tab" data-tab="fertweed">Fert &amp; Weed Control</div>
+    <div class="tab" data-tab="summary">Summary</div>
+  </div>
+  <!-- ================= PAYROLL TAX TAB ================= -->
+  <div class="panel active" id="panel-payroll">
+    <div class="card">
+      <h2>Employer Payroll Tax &amp; Burden Estimator</h2>
+      <div class="note">Federal figures reflect 2026 IRS rates. State unemployment (SUTA) and workers&rsquo; comp defaults are placeholders for North Carolina &mdash; confirm your actual assigned rates before relying on this for pricing.</div>
+      <div class="body">
+        <table>
+          <tr><td style="width:60%">Average field-employee hourly wage</td><td><input type="number" id="p_wage" value="18.00" step="0.25"></td></tr>
+          <tr><td>Average annual hours per employee</td><td><input type="number" id="p_hours" value="2080" step="10"></td></tr>
+          <tr class="subtotal"><td>Annual wage (computed)</td><td class="num" id="p_annualwage"></td></tr>
+        </table>
+        <br>
+        <table>
+          <tr><th>Federal (2026)</th><th></th></tr>
+          <tr><td>Social Security &ndash; employer rate</td><td><input type="number" id="p_ssrate" value="6.2" step="0.1">%</td></tr>
+          <tr><td>Social Security wage base</td><td><input type="number" id="p_ssbase" value="184500" step="1000"></td></tr>
+          <tr><td>Medicare &ndash; employer rate (uncapped)</td><td><input type="number" id="p_medrate" value="1.45" step="0.05">%</td></tr>
+          <tr><td>FUTA &ndash; net rate (after 5.4% state credit)</td><td><input type="number" id="p_futarate" value="0.6" step="0.1">%</td></tr>
+          <tr><td>FUTA wage base</td><td><input type="number" id="p_futabase" value="7000" step="500"></td></tr>
+        </table>
+        <br>
+        <table>
+          <tr><th>State &amp; Insurance (edit for your policy)</th><th></th></tr>
+          <tr><td>State unemployment (SUTA) rate &ndash; NC new-employer default</td><td><input type="number" id="p_sutarate" value="1.0" step="0.1">%</td></tr>
+          <tr><td>State unemployment (SUTA) wage base &ndash; NC 2026 est.</td><td><input type="number" id="p_sutabase" value="32600" step="500"></td></tr>
+          <tr><td>Workers&rsquo; comp rate (per $100 of payroll) &ndash; lawn/landscape class typically $3&ndash;$9</td><td><input type="number" id="p_wcrate" value="6.00" step="0.25"></td></tr>
+          <tr><td>General liability allocation (per $100 of payroll, optional)</td><td><input type="number" id="p_glrate" value="0.50" step="0.10"></td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="card">
+      <h2>Calculated Annual Employer Burden</h2>
+      <div class="body">
+        <table>
+          <tr><th>Component</th><th class="num" style="text-align:right">Annual Cost</th></tr>
+          <tr><td>Social Security</td><td class="num" id="p_ss"></td></tr>
+          <tr><td>Medicare</td><td class="num" id="p_med"></td></tr>
+          <tr><td>FUTA</td><td class="num" id="p_futa"></td></tr>
+          <tr><td>SUTA</td><td class="num" id="p_suta"></td></tr>
+          <tr><td>Workers&rsquo; compensation</td><td class="num" id="p_wc"></td></tr>
+          <tr><td>General liability</td><td class="num" id="p_gl"></td></tr>
+          <tr class="result"><td>Total annual burden</td><td class="num" id="p_total"></td></tr>
+          <tr class="result"><td>Burden % of wages &mdash; used in both COGS tabs</td><td class="num" id="p_pct"></td></tr>
+        </table>
+      </div>
+      <div class="note">Because FUTA and SUTA only tax the first few thousand dollars of wages, this blended % naturally settles lower for higher-paid roles &mdash; that's expected.</div>
+    </div>
+  </div>
+  <!-- ================= MOWING TAB ================= -->
+  <div class="panel" id="panel-mowing"></div>
+  <!-- ================= FERT/WEED TAB ================= -->
+  <div class="panel" id="panel-fertweed"></div>
+  <!-- ================= SUMMARY TAB ================= -->
+  <div class="panel" id="panel-summary">
+    <div class="card">
+      <h2>Gross Margin Summary &ndash; Both Service Lines</h2>
+      <div class="body">
+        <table class="summary-table">
+          <tr><th>&nbsp;</th><th>Mowing</th><th>Fert &amp; Weed Control</th></tr>
+          <tr><td>Total COGS per crew-hour</td><td class="num" id="s_cogs_m"></td><td class="num" id="s_cogs_f"></td></tr>
+          <tr><td>Billed rate per crew-hour</td><td class="num" id="s_bill_m"></td><td class="num" id="s_bill_f"></td></tr>
+          <tr><td>Gross margin $</td><td class="num" id="s_gmd_m"></td><td class="num" id="s_gmd_f"></td></tr>
+          <tr><td>Gross margin %</td><td class="num" id="s_gmp_m"></td><td class="num" id="s_gmp_f"></td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="card">
+      <h2>Breakeven Rate Finder</h2>
+      <div class="body">
+        <table class="summary-table">
+          <tr><th>&nbsp;</th><th>Mowing</th><th>Fert &amp; Weed Control</th></tr>
+          <tr><td>Target gross margin %</td>
+            <td><input type="number" id="s_target_m" value="40" step="1"></td>
+            <td><input type="number" id="s_target_f" value="40" step="1"></td>
+          </tr>
+          <tr class="result"><td>Rate needed per crew-hour</td><td class="num" id="s_break_m"></td><td class="num" id="s_break_f"></td></tr>
+        </table>
+      </div>
+      <div class="note">Breakeven rate = Total COGS per hour &divide; (1 &minus; target margin %).</div>
+    </div>
+  </div>
+  <footer>
+    Built as a modeling tool &mdash; edit any highlighted (yellow) field with your real numbers. Payroll tax figures reflect 2026 federal rates; state and insurance rates are placeholders you should confirm.
+  </footer>
+</div>
+<script>
+const fmtUSD = (v, d=2) => isFinite(v) ? v.toLocaleString('en-US',{style:'currency',currency:'USD',minimumFractionDigits:d,maximumFractionDigits:d}) : '$0.00';
+const fmtPct = (v) => isFinite(v) ? (v*100).toLocaleString('en-US',{minimumFractionDigits:1,maximumFractionDigits:1})+'%' : '0.0%';
+function val(id){ const el = document.getElementById(id); return el ? parseFloat(el.value)||0 : 0; }
+// ---------- Payroll tax ----------
+function calcPayroll(){
+  const wage = val('p_wage'), hours = val('p_hours');
+  const annual = wage*hours;
+  document.getElementById('p_annualwage').textContent = fmtUSD(annual,0);
+  const ss = Math.min(annual, val('p_ssbase')) * (val('p_ssrate')/100);
+  const med = annual * (val('p_medrate')/100);
+  const futa = Math.min(annual, val('p_futabase')) * (val('p_futarate')/100);
+  const suta = Math.min(annual, val('p_sutabase')) * (val('p_sutarate')/100);
+  const wc = annual/100 * val('p_wcrate');
+  const gl = annual/100 * val('p_glrate');
+  const total = ss+med+futa+suta+wc+gl;
+  document.getElementById('p_ss').textContent = fmtUSD(ss,0);
+  document.getElementById('p_med').textContent = fmtUSD(med,0);
+  document.getElementById('p_futa').textContent = fmtUSD(futa,0);
+  document.getElementById('p_suta').textContent = fmtUSD(suta,0);
+  document.getElementById('p_wc').textContent = fmtUSD(wc,0);
+  document.getElementById('p_gl').textContent = fmtUSD(gl,0);
+  document.getElementById('p_total').textContent = fmtUSD(total,0);
+  const pct = annual>0 ? total/annual : 0;
+  document.getElementById('p_pct').textContent = fmtPct(pct);
+  return pct;
+}
+// ---------- Generic COGS sheet builder ----------
+function buildCogsHTML(prefix, cfg){
+  let h = '';
+  // LABOR
+  h += `<div class="card"><h2>Crew Labor Cost per Hour</h2><div class="body"><table>
+    <tr><th>Position</th><th>Hourly Wage</th><th># of People</th><th style="text-align:right">Base $/Crew-Hr</th></tr>`;
+  cfg.labor.forEach((row,i)=>{
+    h += `<tr>
+      <td><input class="lbl-input" type="text" id="${prefix}_lab_name_${i}" value="${row.name}"></td>
+      <td><input type="number" step="0.25" id="${prefix}_lab_wage_${i}" value="${row.wage}"></td>
+      <td><input type="number" step="1" id="${prefix}_lab_count_${i}" value="${row.count}"></td>
+      <td class="num" id="${prefix}_lab_sub_${i}"></td>
+    </tr>`;
+  });
+  h += `<tr class="subtotal"><td colspan="3">Subtotal &ndash; base labor $/crew-hour</td><td class="num" id="${prefix}_lab_total"></td></tr>
+    <tr><td colspan="3">Payroll tax / employer burden % (from Payroll Tax tab)</td><td class="num" id="${prefix}_lab_burden"></td></tr>
+    <tr class="result"><td colspan="3">Loaded labor $/crew-hour</td><td class="num" id="${prefix}_lab_loaded"></td></tr>
+    </table></div></div>`;
+  // EQUIPMENT
+  h += `<div class="card"><h2>Equipment Cost per Hour</h2><div class="body"><table>
+    <tr><th>Equipment</th><th>Price</th><th>Life (hrs)</th><th>Ann. Hrs Used</th><th>Ann. Maint $</th><th>Ann. Ins $</th><th style="text-align:right">$/hr</th></tr>`;
+  cfg.equip.forEach((row,i)=>{
+    h += `<tr>
+      <td><input class="lbl-input" type="text" id="${prefix}_eq_name_${i}" value="${row.name}"></td>
+      <td><input type="number" step="100" id="${prefix}_eq_price_${i}" value="${row.price}"></td>
+      <td><input type="number" step="100" id="${prefix}_eq_life_${i}" value="${row.life}"></td>
+      <td><input type="number" step="50" id="${prefix}_eq_hrs_${i}" value="${row.hrs}"></td>
+      <td><input type="number" step="50" id="${prefix}_eq_maint_${i}" value="${row.maint}"></td>
+      <td><input type="number" step="50" id="${prefix}_eq_ins_${i}" value="${row.ins}"></td>
+      <td class="num" id="${prefix}_eq_sub_${i}"></td>
+    </tr>`;
+  });
+  h += `<tr class="subtotal"><td colspan="6">Subtotal &ndash; equipment $/hr</td><td class="num" id="${prefix}_eq_total"></td></tr>
+    </table></div></div>`;
+  // FUEL
+  h += `<div class="card"><h2>Fuel Cost per Hour</h2><div class="body"><table>
+    <tr><th>Fuel Use</th><th>Gal/Hour</th><th>Price/Gal</th><th style="text-align:right">$/hr</th></tr>`;
+  cfg.fuel.forEach((row,i)=>{
+    h += `<tr>
+      <td><input class="lbl-input" type="text" id="${prefix}_fu_name_${i}" value="${row.name}"></td>
+      <td><input type="number" step="0.1" id="${prefix}_fu_gph_${i}" value="${row.gph}"></td>
+      <td><input type="number" step="0.05" id="${prefix}_fu_price_${i}" value="${row.price}"></td>
+      <td class="num" id="${prefix}_fu_sub_${i}"></td>
+    </tr>`;
+  });
+  h += `<tr class="subtotal"><td colspan="3">Subtotal &ndash; fuel $/hr</td><td class="num" id="${prefix}_fu_total"></td></tr>
+    </table></div></div>`;
+  // MATERIALS (optional)
+  if(cfg.materials){
+    h += `<div class="card"><h2>${cfg.materialsLabel}</h2><div class="body"><table>
+      <tr><th>Product</th><th>Cost per 1,000 sq ft</th><th style="text-align:right">&nbsp;</th></tr>`;
+    cfg.materials.forEach((row,i)=>{
+      h += `<tr>
+        <td><input class="lbl-input" type="text" id="${prefix}_mat_name_${i}" value="${row.name}"></td>
+        <td><input type="number" step="0.1" id="${prefix}_mat_cost_${i}" value="${row.cost}"></td>
+        <td></td>
+      </tr>`;
+    });
+    h += `<tr class="subtotal"><td colspan="2">Subtotal &ndash; material cost per 1,000 sq ft</td><td class="num" id="${prefix}_mat_total"></td></tr>
+      <tr><td colspan="2">Avg. sq ft treated per crew-hour</td><td><input type="number" step="1000" id="${prefix}_mat_rate" value="${cfg.areaPerHour}"></td></tr>
+      <tr class="result"><td colspan="2">Materials $/crew-hour</td><td class="num" id="${prefix}_mat_perhr"></td></tr>
+      </table></div></div>`;
+  }
+  // CONSUMABLES
+  h += `<div class="card"><h2>Consumables Cost per Hour</h2><div class="body"><table>
+    <tr><th>Item</th><th>Annual Cost</th><th>Annual Hours</th><th style="text-align:right">$/hr</th></tr>`;
+  cfg.consumables.forEach((row,i)=>{
+    h += `<tr>
+      <td><input class="lbl-input" type="text" id="${prefix}_co_name_${i}" value="${row.name}"></td>
+      <td><input type="number" step="50" id="${prefix}_co_cost_${i}" value="${row.cost}"></td>
+      <td><input type="number" step="50" id="${prefix}_co_hrs_${i}" value="${row.hrs}"></td>
+      <td class="num" id="${prefix}_co_sub_${i}"></td>
+    </tr>`;
+  });
+  h += `<tr class="subtotal"><td colspan="3">Subtotal &ndash; consumables $/hr</td><td class="num" id="${prefix}_co_total"></td></tr>
+    </table></div></div>`;
+  // OVERHEAD
+  h += `<div class="card"><h2>Overhead Allocation per Hour</h2><div class="body"><table>
+    <tr><th>Item</th><th>Annual Cost</th><th>Annual Billable Hours</th><th style="text-align:right">$/hr</th></tr>`;
+  cfg.overhead.forEach((row,i)=>{
+    h += `<tr>
+      <td><input class="lbl-input" type="text" id="${prefix}_oh_name_${i}" value="${row.name}"></td>
+      <td><input type="number" step="100" id="${prefix}_oh_cost_${i}" value="${row.cost}"></td>
+      <td><input type="number" step="50" id="${prefix}_oh_hrs_${i}" value="${row.hrs}"></td>
+      <td class="num" id="${prefix}_oh_sub_${i}"></td>
+    </tr>`;
+  });
+  h += `<tr class="subtotal"><td colspan="3">Subtotal &ndash; overhead $/hr</td><td class="num" id="${prefix}_oh_total"></td></tr>
+    </table></div></div>`;
+  // TOTAL COGS + stacked bar
+  h += `<div class="card"><h2>Total COGS per Crew-Hour</h2><div class="body">
+    <div class="kpi-row">
+      <div class="kpi"><div class="k-label">Total COGS / hr</div><div class="k-value" id="${prefix}_total_cogs"></div></div>
+      <div class="kpi"><div class="k-label">Billed rate / hr</div><div class="k-value"><input type="number" step="5" id="${prefix}_billrate" value="${cfg.billRate}" style="font-size:20px;font-weight:700;"></div></div>
+      <div class="kpi" id="${prefix}_margin_kpi"><div class="k-label">Gross margin / hr</div><div class="k-value" id="${prefix}_margin"></div></div>
+    </div>
+    <div class="stackbar" id="${prefix}_stackbar"></div>
+    <div class="legend">
+      <span><i class="swatch" style="background:#254E36"></i>Labor</span>
+      <span><i class="swatch" style="background:#3D7350"></i>Equipment</span>
+      <span><i class="swatch" style="background:#7A5B3E"></i>Fuel</span>
+      ${cfg.materials ? '<span><i class="swatch" style="background:#B08A3E"></i>Materials</span>' : ''}
+      <span><i class="swatch" style="background:#9C9585"></i>Consumables</span>
+      <span><i class="swatch" style="background:#5C5A52"></i>Overhead</span>
+    </div>
+  </div></div>`;
+  return h;
+}
+const mowingCfg = {
+  labor:[{name:'Crew Lead',wage:22,count:1},{name:'Mowing Technician',wage:17,count:2}],
+  equip:[{name:'Zero-turn mower',price:12000,life:2500,hrs:900,maint:1200,ins:600},
+         {name:'Push mower / trimmer package',price:2500,life:1500,hrs:700,maint:400,ins:200},
+         {name:'Truck & trailer (allocated)',price:45000,life:6000,hrs:1600,maint:2500,ins:1800}],
+  fuel:[{name:'Mower fuel',gph:1.8,price:3.35},{name:'Truck fuel (allocated)',gph:0.9,price:3.35}],
+  consumables:[{name:'Trimmer line / blade sharpening',cost:1800,hrs:1600}],
+  overhead:[{name:'SA software allocation',cost:1200,hrs:1600},{name:'General overhead / admin allocation',cost:6000,hrs:1600}],
+  billRate:140
+};
+const fwCfg = {
+  labor:[{name:'Licensed Applicator',wage:20,count:1},{name:'Technician / Helper',wage:16,count:1}],
+  equip:[{name:'Ride-on spreader/sprayer',price:9500,life:2000,hrs:800,maint:900,ins:500},
+         {name:'Truck & tank (allocated)',price:42000,life:6000,hrs:1400,maint:2200,ins:1600}],
+  fuel:[{name:'Spreader/sprayer fuel',gph:0.7,price:3.35},{name:'Truck fuel (allocated)',gph:1.0,price:3.35}],
+  materials:[{name:'Granular fertilizer',cost:1.20},{name:'Broadleaf weed control (liquid)',cost:0.60},{name:'Grub / insect control (seasonal avg.)',cost:0.40}],
+  materialsLabel:'Materials Cost per Hour (Fertilizer &amp; Weed Control Products)',
+  areaPerHour:40000,
+  consumables:[{name:'Nozzles / spreader parts / PPE',cost:1200,hrs:1400}],
+  overhead:[{name:'SA software allocation',cost:1200,hrs:1400},{name:'General overhead / admin allocation',cost:6000,hrs:1400},{name:'Applicator license & continuing ed',cost:500,hrs:1400}],
+  billRate:180
+};
+document.getElementById('panel-mowing').innerHTML = buildCogsHTML('mow', mowingCfg);
+document.getElementById('panel-fertweed').innerHTML = buildCogsHTML('fw', fwCfg);
+function calcCogsSheet(prefix, cfg, burdenPct){
+  // labor
+  let laborTotal = 0;
+  cfg.labor.forEach((row,i)=>{
+    const wage = val(`${prefix}_lab_wage_${i}`), count = val(`${prefix}_lab_count_${i}`);
+    const sub = wage*count;
+    document.getElementById(`${prefix}_lab_sub_${i}`).textContent = fmtUSD(sub);
+    laborTotal += sub;
+  });
+  document.getElementById(`${prefix}_lab_total`).textContent = fmtUSD(laborTotal);
+  document.getElementById(`${prefix}_lab_burden`).textContent = fmtPct(burdenPct);
+  const loadedLabor = laborTotal * (1+burdenPct);
+  document.getElementById(`${prefix}_lab_loaded`).textContent = fmtUSD(loadedLabor);
+  // equipment
+  let eqTotal = 0;
+  cfg.equip.forEach((row,i)=>{
+    const price = val(`${prefix}_eq_price_${i}`), life = val(`${prefix}_eq_life_${i}`), hrs = val(`${prefix}_eq_hrs_${i}`);
+    const maint = val(`${prefix}_eq_maint_${i}`), ins = val(`${prefix}_eq_ins_${i}`);
+    const dep = life>0 ? price/life : 0;
+    const maintHr = hrs>0 ? maint/hrs : 0;
+    const insHr = hrs>0 ? ins/hrs : 0;
+    const sub = dep+maintHr+insHr;
+    document.getElementById(`${prefix}_eq_sub_${i}`).textContent = fmtUSD(sub);
+    eqTotal += sub;
+  });
+  document.getElementById(`${prefix}_eq_total`).textContent = fmtUSD(eqTotal);
+  // fuel
+  let fuTotal = 0;
+  cfg.fuel.forEach((row,i)=>{
+    const gph = val(`${prefix}_fu_gph_${i}`), price = val(`${prefix}_fu_price_${i}`);
+    const sub = gph*price;
+    document.getElementById(`${prefix}_fu_sub_${i}`).textContent = fmtUSD(sub);
+    fuTotal += sub;
+  });
+  document.getElementById(`${prefix}_fu_total`).textContent = fmtUSD(fuTotal);
+  // materials
+  let matPerHr = 0;
+  if(cfg.materials){
+    let matTotal = 0;
+    cfg.materials.forEach((row,i)=>{ matTotal += val(`${prefix}_mat_cost_${i}`); });
+    document.getElementById(`${prefix}_mat_total`).textContent = fmtUSD(matTotal);
+    const rate = val(`${prefix}_mat_rate`);
+    matPerHr = matTotal * (rate/1000);
+    document.getElementById(`${prefix}_mat_perhr`).textContent = fmtUSD(matPerHr);
+  }
+  // consumables
+  let coTotal = 0;
+  cfg.consumables.forEach((row,i)=>{
+    const cost = val(`${prefix}_co_cost_${i}`), hrs = val(`${prefix}_co_hrs_${i}`);
+    const sub = hrs>0 ? cost/hrs : 0;
+    document.getElementById(`${prefix}_co_sub_${i}`).textContent = fmtUSD(sub);
+    coTotal += sub;
+  });
+  document.getElementById(`${prefix}_co_total`).textContent = fmtUSD(coTotal);
+  // overhead
+  let ohTotal = 0;
+  cfg.overhead.forEach((row,i)=>{
+    const cost = val(`${prefix}_oh_cost_${i}`), hrs = val(`${prefix}_oh_hrs_${i}`);
+    const sub = hrs>0 ? cost/hrs : 0;
+    document.getElementById(`${prefix}_oh_sub_${i}`).textContent = fmtUSD(sub);
+    ohTotal += sub;
+  });
+  document.getElementById(`${prefix}_oh_total`).textContent = fmtUSD(ohTotal);
+  const totalCogs = loadedLabor + eqTotal + fuTotal + matPerHr + coTotal + ohTotal;
+  document.getElementById(`${prefix}_total_cogs`).textContent = fmtUSD(totalCogs);
+  const billRate = val(`${prefix}_billrate`);
+  const margin = billRate - totalCogs;
+  const marginPct = billRate>0 ? margin/billRate : 0;
+  const marginEl = document.getElementById(`${prefix}_margin`);
+  marginEl.textContent = fmtUSD(margin) + ' (' + fmtPct(marginPct) + ')';
+  document.getElementById(`${prefix}_margin_kpi`).classList.toggle('warn', margin<0);
+  // stacked bar
+  const parts = [
+    {label:'Labor', v: loadedLabor, color:'#254E36'},
+    {label:'Equip', v: eqTotal, color:'#3D7350'},
+    {label:'Fuel', v: fuTotal, color:'#7A5B3E'},
+  ];
+  if(cfg.materials) parts.push({label:'Materials', v: matPerHr, color:'#B08A3E'});
+  parts.push({label:'Consum.', v: coTotal, color:'#9C9585'});
+  parts.push({label:'Overhead', v: ohTotal, color:'#5C5A52'});
+  const bar = document.getElementById(`${prefix}_stackbar`);
+  bar.innerHTML = '';
+  parts.forEach(p=>{
+    const pctWidth = totalCogs>0 ? (p.v/totalCogs*100) : 0;
+    if(pctWidth < 0.5) return;
+    const d = document.createElement('div');
+    d.style.width = pctWidth+'%';
+    d.style.background = p.color;
+    d.textContent = pctWidth>7 ? fmtUSD(p.v,2) : '';
+    bar.appendChild(d);
+  });
+  return {totalCogs, billRate, margin, marginPct};
+}
+function calcSummary(mow, fw){
+  document.getElementById('s_cogs_m').textContent = fmtUSD(mow.totalCogs);
+  document.getElementById('s_cogs_f').textContent = fmtUSD(fw.totalCogs);
+  document.getElementById('s_bill_m').textContent = fmtUSD(mow.billRate);
+  document.getElementById('s_bill_f').textContent = fmtUSD(fw.billRate);
+  document.getElementById('s_gmd_m').textContent = fmtUSD(mow.margin);
+  document.getElementById('s_gmd_f').textContent = fmtUSD(fw.margin);
+  document.getElementById('s_gmp_m').textContent = fmtPct(mow.marginPct);
+  document.getElementById('s_gmp_f').textContent = fmtPct(fw.marginPct);
+  const targetM = val('s_target_m')/100, targetF = val('s_target_f')/100;
+  const breakM = targetM<1 ? mow.totalCogs/(1-targetM) : 0;
+  const breakF = targetF<1 ? fw.totalCogs/(1-targetF) : 0;
+  document.getElementById('s_break_m').textContent = fmtUSD(breakM);
+  document.getElementById('s_break_f').textContent = fmtUSD(breakF);
+}
+function recalcAll(){
+  const burdenPct = calcPayroll();
+  const mowResult = calcCogsSheet('mow', mowingCfg, burdenPct);
+  const fwResult = calcCogsSheet('fw', fwCfg, burdenPct);
+  calcSummary(mowResult, fwResult);
+}
+document.addEventListener('input', recalcAll);
+recalcAll();
+// tabs
+document.querySelectorAll('.tab').forEach(tab=>{
+  tab.addEventListener('click', ()=>{
+    document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('panel-'+tab.dataset.tab).classList.add('active');
+  });
+});
+</script>
+</body>
+</html>
