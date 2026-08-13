@@ -1,0 +1,416 @@
+<!--
+  ============================================================================
+  ADVANCED TURF CARE — INSTANT PRICING BLOCK
+  ============================================================================
+  This whole file is self-contained (HTML + CSS + JS, no outside files).
+  You can either:
+    (A) View it on its own as a page (GitHub Pages), or
+    (B) Paste the WHOLE thing into a WordPress "Custom HTML" block.
+
+  TO CUSTOMIZE:
+      Phone number  — edit the CONFIG block near the top of the <script>
+                      (search for "CONFIG").
+      Signup form   — "Get Started" reveals the Service Autopilot form
+                      embedded below; to swap it, change the <iframe
+                      id="saFormsIframe"> src.
+      Pricing       — lives in one place (search for "priceFor").
+  ============================================================================
+-->
+<title>Advanced Turf Care — Instant Lawn Pricing</title>
+
+<div id="atc-pricing">
+  <div class="atc-card">
+    <p class="atc-eyebrow">Instant Estimate</p>
+    <h2 class="atc-title">See your lawn care price</h2>
+    <p class="atc-sub">Enter your approximate lawn size and get a price right away — no waiting on a quote.</p>
+
+    <form class="atc-form" novalidate>
+      <label class="atc-label" for="atc-size">Lawn size (square feet)</label>
+      <div class="atc-inputrow">
+        <input
+          id="atc-size"
+          class="atc-input"
+          type="number"
+          inputmode="numeric"
+          min="1"
+          step="100"
+          placeholder="e.g. 6,500"
+          autocomplete="off">
+        <button type="submit" class="atc-calc">Get Price</button>
+      </div>
+      <p class="atc-hint" id="atc-hint">Not sure of your lawn size? A quarter-acre is about 10,000 sq&nbsp;ft. Enter your best estimate.</p>
+    </form>
+
+    <!-- Result, hidden until a price is calculated -->
+    <div class="atc-result" id="atc-result" hidden>
+      <div class="atc-price-wrap">
+        <span class="atc-price-label">Your estimated price</span>
+        <span class="atc-price" id="atc-price">$0</span>
+        <span class="atc-price-range" id="atc-range"></span>
+      </div>
+
+      <div class="atc-cta">
+        <button type="button" class="atc-book" id="atc-book">Get Started</button>
+        <a class="atc-phone" id="atc-phone" href="tel:+17048005955">
+          <span class="atc-phone-icon" aria-hidden="true">&#9742;</span>
+          (704)&nbsp;800-5955
+        </a>
+      </div>
+
+      <p class="atc-fineprint">
+        Estimate based on lawn size. Final price confirmed on a quick visit and may vary with
+        access, slope, or special conditions. Prices include applicable service; ask us about our program details.
+      </p>
+
+      <!-- Service Autopilot signup form — revealed when "Get Started" is clicked -->
+      <div class="atc-signup" id="atc-signup" hidden>
+        <p class="atc-signup-head">Let's get you scheduled</p>
+        <iframe
+          id="saFormsIframe"
+          class="atc-signup-frame"
+          src="https://my.serviceautopilot.com/v3/ViewForm?id=60ef48d5-f49f-4a1b-b0ae-584966c1014a&websiteHost=1"
+          width="100%"
+          height="786"
+          scrolling="auto"
+          frameborder="0"
+          title="Sign up for service"
+          style="overflow-y:visible;"></iframe>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* All styles are scoped under #atc-pricing so they won't fight your theme. */
+  #atc-pricing {
+    --atc-ink: #1E2A55;        /* deep navy — matches the site's nav & body text */
+    --atc-paper: #F4F6FA;      /* light input fill */
+    --atc-raised: #FFFFFF;     /* clean white, like the site background */
+    --atc-forest: #3FA82E;     /* brand grass green (headings / CALL button) */
+    --atc-forest-dk: #34901F;  /* green hover */
+    --atc-forest-soft: #E9F5E4;/* soft green for the price box */
+    --atc-navy: #293C97;       /* brand navy — the "Get My Free Estimate" button */
+    --atc-navy-dk: #1F2D77;    /* navy hover */
+    --atc-line: #E1E4EC;       /* light gray hairline */
+    --atc-muted: #596079;      /* slate for secondary text */
+
+    box-sizing: border-box;
+    max-width: 560px;
+    margin: 24px auto;
+    padding: 0 16px;
+    font-family: -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.5;
+    color: var(--atc-ink);
+    -webkit-text-size-adjust: 100%;
+  }
+  #atc-pricing *, #atc-pricing *::before, #atc-pricing *::after { box-sizing: border-box; }
+
+  #atc-pricing .atc-card {
+    background: var(--atc-raised);
+    border: 1px solid var(--atc-line);
+    border-top: 3px solid var(--atc-forest);
+    border-radius: 10px;
+    padding: 28px 26px 26px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.05);
+  }
+
+  #atc-pricing .atc-eyebrow {
+    margin: 0 0 6px;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.11em;
+    font-weight: 700;
+    color: var(--atc-forest);
+  }
+  #atc-pricing .atc-title {
+    font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    font-weight: 600;
+    font-size: 1.5rem;
+    line-height: 1.2;
+    margin: 0 0 8px;
+    color: var(--atc-ink);
+  }
+  #atc-pricing .atc-sub {
+    margin: 0 0 20px;
+    font-size: 0.95rem;
+    color: var(--atc-muted);
+  }
+
+  #atc-pricing .atc-form { margin: 0; }
+  #atc-pricing .atc-label {
+    display: block;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--atc-ink);
+    margin-bottom: 7px;
+  }
+  #atc-pricing .atc-inputrow {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  #atc-pricing .atc-input {
+    flex: 1 1 180px;
+    min-width: 0;
+    font-size: 1.05rem;
+    padding: 12px 14px;
+    border: 1px solid var(--atc-line);
+    border-radius: 8px;
+    background: var(--atc-paper);
+    color: var(--atc-ink);
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  #atc-pricing .atc-input:focus {
+    outline: none;
+    border-color: var(--atc-forest);
+    box-shadow: 0 0 0 3px rgba(63,168,46,0.18);
+    background: var(--atc-raised);
+  }
+  #atc-pricing .atc-calc {
+    flex: 0 0 auto;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 12px 22px;
+    border: none;
+    border-radius: 8px;
+    background: var(--atc-forest);
+    color: #fff;
+    cursor: pointer;
+    transition: background 0.15s ease;
+  }
+  #atc-pricing .atc-calc:hover { background: var(--atc-forest-dk); }
+  #atc-pricing .atc-calc:focus-visible {
+    outline: 3px solid rgba(63,168,46,0.45);
+    outline-offset: 2px;
+  }
+
+  #atc-pricing .atc-hint {
+    margin: 10px 0 0;
+    font-size: 0.8rem;
+    color: var(--atc-muted);
+  }
+  #atc-pricing .atc-hint.atc-error { color: #B4402A; font-weight: 600; }
+
+  /* Result */
+  #atc-pricing .atc-result {
+    margin-top: 22px;
+    padding-top: 22px;
+    border-top: 1px solid var(--atc-line);
+    animation: atc-fade 0.25s ease;
+  }
+  @keyframes atc-fade {
+    from { opacity: 0; transform: translateY(4px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  #atc-pricing .atc-price-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background: var(--atc-forest-soft);
+    border-radius: 10px;
+    padding: 20px 16px;
+  }
+  #atc-pricing .atc-price-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    font-weight: 700;
+    color: var(--atc-forest);
+  }
+  #atc-pricing .atc-price {
+    font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    font-size: 2.6rem;
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--atc-ink);
+    margin: 4px 0 2px;
+  }
+  #atc-pricing .atc-price-range {
+    font-size: 0.82rem;
+    color: var(--atc-muted);
+  }
+
+  #atc-pricing .atc-cta {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 18px;
+  }
+  #atc-pricing .atc-book {
+    display: inline-block;
+    font-size: 1rem;
+    font-weight: 700;
+    text-decoration: none;
+    padding: 12px 26px;
+    border-radius: 8px;
+    background: var(--atc-navy);
+    color: #fff;
+    cursor: pointer;
+    border: none;
+    transition: background 0.15s ease;
+  }
+  #atc-pricing .atc-book:hover { background: var(--atc-navy-dk); }
+  #atc-pricing .atc-phone {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--atc-forest);
+  }
+  #atc-pricing .atc-phone:hover { text-decoration: underline; }
+  #atc-pricing .atc-phone-icon { font-size: 1.05rem; }
+
+  #atc-pricing .atc-fineprint {
+    margin: 16px 0 0;
+    font-size: 0.74rem;
+    line-height: 1.45;
+    color: var(--atc-muted);
+    text-align: center;
+  }
+
+  /* Signup form (revealed by "Get Started") */
+  #atc-pricing .atc-signup {
+    margin-top: 22px;
+    padding-top: 20px;
+    border-top: 1px solid var(--atc-line);
+    animation: atc-fade 0.25s ease;
+  }
+  #atc-pricing .atc-signup-head {
+    margin: 0 0 12px;
+    font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--atc-ink);
+    text-align: center;
+  }
+  #atc-pricing .atc-signup-frame {
+    display: block;
+    width: 100%;
+    border: 1px solid var(--atc-line);
+    border-radius: 8px;
+    background: var(--atc-raised);
+  }
+
+  @media (max-width: 420px) {
+    #atc-pricing .atc-card { padding: 24px 18px 22px; }
+    #atc-pricing .atc-calc { flex: 1 1 100%; }
+    #atc-pricing .atc-price { font-size: 2.2rem; }
+  }
+</style>
+
+<script>
+  (function () {
+    var root = document.getElementById("atc-pricing");
+    if (!root) return;
+
+    /* ======================= CONFIG — edit these ======================= */
+    var PHONE = "(704) 800-5955";                 // shown to customers
+    var PHONE_TEL = "+17048005955";               // used for click-to-call
+    // "Get Started" reveals the Service Autopilot signup form embedded below
+    // (see the <iframe id="saFormsIframe"> in the HTML). To swap in a
+    // different form later, just replace that iframe's src.
+    /* ================================================================== */
+
+    /* ---- Pricing model ----------------------------------------------
+       Base $247 covers up to 4,000 sq ft.
+       Every 500 sq ft (or part of one) above 4,000 adds $25.
+       No upper cap — it keeps following the same pattern.
+       Examples:  4,000 -> $247   9,500 -> $522   20,000 -> $1,047
+    ------------------------------------------------------------------ */
+    var BASE_SIZE = 4000;
+    var BASE_PRICE = 247;
+    var BAND_SIZE = 500;
+    var BAND_PRICE = 25;
+
+    function priceFor(sqft) {
+      if (sqft <= BASE_SIZE) return BASE_PRICE;
+      var bands = Math.ceil((sqft - BASE_SIZE) / BAND_SIZE);
+      return BASE_PRICE + bands * BAND_PRICE;
+    }
+
+    // The sq-ft range that shares the same price as the entered size,
+    // so we can show "for lawns 6,001–6,500 sq ft".
+    function rangeFor(sqft) {
+      if (sqft <= BASE_SIZE) return { lo: 1, hi: BASE_SIZE };
+      var bands = Math.ceil((sqft - BASE_SIZE) / BAND_SIZE);
+      return {
+        lo: BASE_SIZE + (bands - 1) * BAND_SIZE + 1,
+        hi: BASE_SIZE + bands * BAND_SIZE
+      };
+    }
+
+    function commas(n) {
+      return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    var form   = root.querySelector(".atc-form");
+    var input  = root.querySelector("#atc-size");
+    var hint   = root.querySelector("#atc-hint");
+    var result = root.querySelector("#atc-result");
+    var priceEl = root.querySelector("#atc-price");
+    var rangeEl = root.querySelector("#atc-range");
+    var bookEl  = root.querySelector("#atc-book");
+    var phoneEl = root.querySelector("#atc-phone");
+    var signup  = root.querySelector("#atc-signup");
+    var defaultHint = hint.innerHTML;
+
+    // Apply config to the on-page elements
+    phoneEl.setAttribute("href", "tel:" + PHONE_TEL);
+    phoneEl.lastChild.textContent = " " + PHONE;
+
+    // "Get Started" reveals the embedded signup form and scrolls to it.
+    bookEl.addEventListener("click", function () {
+      signup.hidden = false;
+      bookEl.textContent = "Sign up below ↓";
+      signup.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+
+    function showError(msg) {
+      hint.innerHTML = msg;
+      hint.classList.add("atc-error");
+      result.hidden = true;
+    }
+
+    function calculate() {
+      var raw = (input.value || "").replace(/[^0-9.]/g, "");
+      var sqft = Math.round(parseFloat(raw));
+
+      if (!raw || isNaN(sqft) || sqft < 1) {
+        showError("Please enter your lawn size in square feet (a number greater than 0).");
+        return;
+      }
+      if (sqft > 500000) {
+        showError("That looks larger than a typical lawn — please call us at " + PHONE + " for a commercial quote.");
+        return;
+      }
+
+      hint.innerHTML = defaultHint;
+      hint.classList.remove("atc-error");
+
+      var price = priceFor(sqft);
+      var r = rangeFor(sqft);
+
+      priceEl.textContent = "$" + commas(price);
+      rangeEl.textContent = "for lawns " + commas(r.lo) + "–" + commas(r.hi) + " sq ft";
+
+      result.hidden = false;
+    }
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      calculate();
+    });
+
+    // Recalculate live once a result is already showing, so the number
+    // updates as they adjust the size.
+    input.addEventListener("input", function () {
+      if (!result.hidden) calculate();
+    });
+  })();
+</script>
