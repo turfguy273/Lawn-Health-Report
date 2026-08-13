@@ -7,11 +7,13 @@
     (A) View it on its own as a page (GitHub Pages), or
     (B) Paste the WHOLE thing into a WordPress "Custom HTML" block.
 
-  TO CUSTOMIZE — edit the two lines in the CONFIG block near the bottom of
-  the <script> (search for "CONFIG"):
-      PHONE        — the number shown and dialed
-      BOOKING_URL  — where the "Get Started" button sends people
-  Pricing lives in one place too (search for "priceFor").
+  TO CUSTOMIZE:
+      Phone number  — edit the CONFIG block near the top of the <script>
+                      (search for "CONFIG").
+      Signup form   — "Get Started" reveals the Service Autopilot form
+                      embedded below; to swap it, change the <iframe
+                      id="saFormsIframe"> src.
+      Pricing       — lives in one place (search for "priceFor").
   ============================================================================
 -->
 <title>Advanced Turf Care — Instant Lawn Pricing</title>
@@ -48,7 +50,7 @@
       </div>
 
       <div class="atc-cta">
-        <a class="atc-book" id="atc-book" href="#">Get Started</a>
+        <button type="button" class="atc-book" id="atc-book">Get Started</button>
         <a class="atc-phone" id="atc-phone" href="tel:+17048005955">
           <span class="atc-phone-icon" aria-hidden="true">&#9742;</span>
           (704)&nbsp;800-5955
@@ -59,6 +61,21 @@
         Estimate based on lawn size. Final price confirmed on a quick visit and may vary with
         access, slope, or special conditions. Prices include applicable service; ask us about our program details.
       </p>
+
+      <!-- Service Autopilot signup form — revealed when "Get Started" is clicked -->
+      <div class="atc-signup" id="atc-signup" hidden>
+        <p class="atc-signup-head">Let's get you scheduled</p>
+        <iframe
+          id="saFormsIframe"
+          class="atc-signup-frame"
+          src="https://my.serviceautopilot.com/v3/ViewForm?id=60ef48d5-f49f-4a1b-b0ae-584966c1014a&websiteHost=1"
+          width="100%"
+          height="786"
+          scrolling="auto"
+          frameborder="0"
+          title="Sign up for service"
+          style="overflow-y:visible;"></iframe>
+      </div>
     </div>
   </div>
 </div>
@@ -254,6 +271,29 @@
     text-align: center;
   }
 
+  /* Signup form (revealed by "Get Started") */
+  #atc-pricing .atc-signup {
+    margin-top: 22px;
+    padding-top: 20px;
+    border-top: 1px solid var(--atc-line);
+    animation: atc-fade 0.25s ease;
+  }
+  #atc-pricing .atc-signup-head {
+    margin: 0 0 12px;
+    font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--atc-ink);
+    text-align: center;
+  }
+  #atc-pricing .atc-signup-frame {
+    display: block;
+    width: 100%;
+    border: 1px solid var(--atc-line);
+    border-radius: 8px;
+    background: var(--atc-raised);
+  }
+
   @media (max-width: 420px) {
     #atc-pricing .atc-card { padding: 24px 18px 22px; }
     #atc-pricing .atc-calc { flex: 1 1 100%; }
@@ -269,11 +309,9 @@
     /* ======================= CONFIG — edit these ======================= */
     var PHONE = "(704) 800-5955";                 // shown to customers
     var PHONE_TEL = "+17048005955";               // used for click-to-call
-    var BOOKING_URL = "tel:+17048005955";         // <-- put your online
-                                                  //     booking/quote-form
-                                                  //     link here. Until you
-                                                  //     do, "Get Started"
-                                                  //     dials the phone.
+    // "Get Started" reveals the Service Autopilot signup form embedded below
+    // (see the <iframe id="saFormsIframe"> in the HTML). To swap in a
+    // different form later, just replace that iframe's src.
     /* ================================================================== */
 
     /* ---- Pricing model ----------------------------------------------
@@ -316,12 +354,19 @@
     var rangeEl = root.querySelector("#atc-range");
     var bookEl  = root.querySelector("#atc-book");
     var phoneEl = root.querySelector("#atc-phone");
+    var signup  = root.querySelector("#atc-signup");
     var defaultHint = hint.innerHTML;
 
     // Apply config to the on-page elements
-    bookEl.setAttribute("href", BOOKING_URL);
     phoneEl.setAttribute("href", "tel:" + PHONE_TEL);
     phoneEl.lastChild.textContent = " " + PHONE;
+
+    // "Get Started" reveals the embedded signup form and scrolls to it.
+    bookEl.addEventListener("click", function () {
+      signup.hidden = false;
+      bookEl.textContent = "Sign up below ↓";
+      signup.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
 
     function showError(msg) {
       hint.innerHTML = msg;
