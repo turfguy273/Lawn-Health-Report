@@ -83,15 +83,16 @@
 <style>
   /* All styles are scoped under #atc-pricing so they won't fight your theme. */
   #atc-pricing {
-    --atc-ink: #2A2E26;
-    --atc-paper: #FBF9F4;
-    --atc-raised: #FFFFFF;
-    --atc-forest: #1D7A3C;
-    --atc-forest-dk: #16632F;
-    --atc-forest-soft: #E7F1E8;
-    --atc-clay: #A8672E;
-    --atc-line: #D8D2C4;
-    --atc-muted: #6B6A5E;
+    --atc-ink: #1E2A55;        /* deep navy — matches the site's nav & body text */
+    --atc-paper: #F4F6FA;      /* light input fill */
+    --atc-raised: #FFFFFF;     /* clean white, like the site background */
+    --atc-forest: #3FA82E;     /* brand grass green (headings / CALL button) */
+    --atc-forest-dk: #34901F;  /* green hover */
+    --atc-forest-soft: #E9F5E4;/* soft green for the price box */
+    --atc-navy: #293C97;       /* brand navy — the "Get My Free Estimate" button */
+    --atc-navy-dk: #1F2D77;    /* navy hover */
+    --atc-line: #E1E4EC;       /* light gray hairline */
+    --atc-muted: #596079;      /* slate for secondary text */
 
     box-sizing: border-box;
     max-width: 560px;
@@ -163,7 +164,7 @@
   #atc-pricing .atc-input:focus {
     outline: none;
     border-color: var(--atc-forest);
-    box-shadow: 0 0 0 3px rgba(29,122,60,0.15);
+    box-shadow: 0 0 0 3px rgba(63,168,46,0.18);
     background: var(--atc-raised);
   }
   #atc-pricing .atc-calc {
@@ -180,7 +181,7 @@
   }
   #atc-pricing .atc-calc:hover { background: var(--atc-forest-dk); }
   #atc-pricing .atc-calc:focus-visible {
-    outline: 3px solid rgba(29,122,60,0.4);
+    outline: 3px solid rgba(63,168,46,0.45);
     outline-offset: 2px;
   }
 
@@ -246,11 +247,13 @@
     text-decoration: none;
     padding: 12px 26px;
     border-radius: 8px;
-    background: var(--atc-clay);
+    background: var(--atc-navy);
     color: #fff;
-    transition: filter 0.15s ease;
+    cursor: pointer;
+    border: none;
+    transition: background 0.15s ease;
   }
-  #atc-pricing .atc-book:hover { filter: brightness(0.93); }
+  #atc-pricing .atc-book:hover { background: var(--atc-navy-dk); }
   #atc-pricing .atc-phone {
     display: inline-flex;
     align-items: center;
