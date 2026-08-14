@@ -49,6 +49,18 @@
         <span class="atc-price-range" id="atc-range"></span>
       </div>
 
+      <div class="atc-includes">
+        <p class="atc-includes-head">Your program includes</p>
+        <ul class="atc-list">
+          <li>
+            <span class="atc-list-main">Starter fertilizer <span class="atc-list-note">(18-24-12, 50% controlled-release)</span></span>
+            <span class="atc-list-price"><span class="atc-strike" id="atc-fert">$0</span> <span class="atc-free">FREE</span></span>
+          </li>
+          <li><span class="atc-list-main">Double-pass core aeration</span></li>
+          <li><span class="atc-list-main">One free touch-up seeding, if needed</span></li>
+        </ul>
+      </div>
+
       <div class="atc-cta">
         <button type="button" class="atc-book" id="atc-book">Get Started</button>
         <a class="atc-phone" id="atc-phone" href="tel:+17048005955">
@@ -56,11 +68,6 @@
           (704)&nbsp;800-5955
         </a>
       </div>
-
-      <p class="atc-fineprint">
-        Estimate based on lawn size. Final price confirmed on a quick visit and may vary with
-        access, slope, or special conditions. Prices include applicable service; ask us about our program details.
-      </p>
 
       <!-- Service Autopilot signup form — revealed when "Get Started" is clicked -->
       <div class="atc-signup" id="atc-signup" hidden>
@@ -266,12 +273,67 @@
   #atc-pricing .atc-phone:hover { text-decoration: underline; }
   #atc-pricing .atc-phone-icon { font-size: 1.05rem; }
 
-  #atc-pricing .atc-fineprint {
-    margin: 16px 0 0;
-    font-size: 0.74rem;
-    line-height: 1.45;
+  /* What's included */
+  #atc-pricing .atc-includes {
+    margin-top: 18px;
+  }
+  #atc-pricing .atc-includes-head {
+    margin: 0 0 10px;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    font-weight: 700;
+    color: var(--atc-ink);
+  }
+  #atc-pricing .atc-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  #atc-pricing .atc-list li {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 10px;
+    font-size: 0.92rem;
+    padding-left: 26px;
+    position: relative;
+  }
+  #atc-pricing .atc-list li::before {
+    content: "\2713";               /* green check mark */
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-weight: 800;
+    color: var(--atc-forest);
+  }
+  #atc-pricing .atc-list-main { color: var(--atc-ink); }
+  #atc-pricing .atc-list-note {
     color: var(--atc-muted);
-    text-align: center;
+    font-size: 0.82rem;
+  }
+  #atc-pricing .atc-list-price {
+    flex: none;
+    white-space: nowrap;
+  }
+  #atc-pricing .atc-strike {
+    color: var(--atc-muted);
+    text-decoration: line-through;
+    margin-right: 4px;
+  }
+  #atc-pricing .atc-free {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #fff;
+    background: var(--atc-forest);
+    padding: 2px 8px;
+    border-radius: 4px;
   }
 
   /* Signup form (revealed by "Get Started") */
@@ -328,6 +390,12 @@
     var BAND_SIZE = 500;
     var BAND_PRICE = 25;
 
+    // Starter-fertilizer discount shown as "FREE": $10 per 1,000 sq ft.
+    var FERT_PER_1000 = 10;
+    function fertValue(sqft) {
+      return Math.round((sqft / 1000) * FERT_PER_1000);
+    }
+
     function priceFor(sqft) {
       if (sqft <= BASE_SIZE) return BASE_PRICE;
       var bands = Math.ceil((sqft - BASE_SIZE) / BAND_SIZE);
@@ -355,6 +423,7 @@
     var result = root.querySelector("#atc-result");
     var priceEl = root.querySelector("#atc-price");
     var rangeEl = root.querySelector("#atc-range");
+    var fertEl  = root.querySelector("#atc-fert");
     var bookEl  = root.querySelector("#atc-book");
     var phoneEl = root.querySelector("#atc-phone");
     var signup  = root.querySelector("#atc-signup");
@@ -398,6 +467,7 @@
 
       priceEl.textContent = "$" + commas(price);
       rangeEl.textContent = "for lawns " + commas(r.lo) + "–" + commas(r.hi) + " sq ft";
+      fertEl.textContent = "$" + commas(fertValue(sqft));
 
       result.hidden = false;
     }
